@@ -5,16 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CS Video Player</title>
     <style>
-        /* Убираем все отступы и полосы прокрутки */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #000; /* Черный фон, пока грузится видео */
+            background-color: #000;
+            cursor: pointer; /* Показываем иконку руки, чтобы игрок понимал, что можно кликнуть */
         }
-        /* Растягиваем видео на весь экран */
         video {
             position: absolute;
             top: 50%;
@@ -24,16 +23,34 @@
             width: auto;
             height: auto;
             transform: translate(-50%, -50%);
-            object-fit: cover; /* Видео заполнит экран без черных полос */
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
 
-    <video autoplay loop muted playsinline>
-        <source src="gazan67.mp4" type="video/mp4">
+    <video id="myVideo" autoplay loop muted playsinline>
+        <source src="ССЫЛКА_НА_ТВОЙ_RAW_ФАЙЛ_ВИДЕО.mp4" type="video/mp4">
         Ваш браузер не поддерживает видео.
     </video>
+
+    <script>
+        const video = document.getElementById('myVideo');
+
+        // Функция, которая снимает заглушку звука
+        function unmuteVideo() {
+            video.muted = false;
+            // Убираем слушатели событий, чтобы они не срабатывали повторно
+            window.removeEventListener('click', unmuteVideo);
+            window.removeEventListener('mousemove', unmuteVideo);
+            window.removeEventListener('keydown', unmuteVideo);
+        }
+
+        // Ждем любого действия от пользователя в окне оверлея
+        window.addEventListener('click', unmuteVideo);
+        window.addEventListener('mousemove', unmuteVideo);
+        window.addEventListener('keydown', unmuteVideo);
+    </script>
 
 </body>
 </html>
